@@ -12,6 +12,7 @@
 
 ```
 function dream(){
+    print "dreaming"
     dream()
 }
 ```
