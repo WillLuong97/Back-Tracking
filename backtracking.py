@@ -166,7 +166,7 @@ def solveNQ():
 
     return True
 
-solveNQ()
+# solveNQ()
 
 #Problem 3: Leetcode 79: Word Search
 #Problem statement:
@@ -190,4 +190,63 @@ Given word = "ABCB", return false.
 
 '''
 
+#we will approach this problem with a dfs approach
+def exist(board, word):
+    #base case: 
+    if not board: 
+        return False
+
+    if not word: 
+        return False
+    #getting the dimension of the board
+    m = len(board)
+    n = len(board[0])
+
+    #create a visited arrat to keep track of the visited neighbors of a node
+    visited = [[False for i in range(0, m)] for j in range(0, n)]
+
+    for i in range(m):
+        for j in range(n):
+            if dfs(i, j, word, visited, board):
+                return True
+    return False
         
+
+#create a helper method to handle dfs alogrithm:
+def dfs(i,j, word, visited, board):
+    #getting the dimension of the board
+    m = len(board)
+    n = len(board[0])
+
+    #Any element being checked in this function will
+    #automatically get put into the visited array right on the spot
+    visited[i][j] == True
+    #Base case: 
+    if not word: 
+        return False
+    
+    if not (0 <= i < m and 0<=j<n):
+        return False
+    #if the current element in the board is not anywhere
+    #in the word list, then return false
+    if board[i][j] != word[0]:
+        return False
+    #checking the neighboring node to see if they are already in
+    #visited array or not
+    if not visited[i][j+1] or not visited[i][j-1] or not visited[i+1][j] or not visited[i-1][j]:
+        result = dfs(i, j+1, word[1:], visited, board) or dfs(i, j-1, word[1:], visited, board) or dfs(i+1, j, word[1:], visited, board) or dfs(i-1, j, word[1:], visited, board)
+
+    return result
+
+
+#driver code: 
+test_board =[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+test_word = "ABCCED"
+
+print(exist(test_board, test_word))
+ 
