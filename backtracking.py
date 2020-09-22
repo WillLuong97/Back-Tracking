@@ -248,5 +248,65 @@ test_board =[
 
 test_word = "ABCCED"
 
-print(exist(test_board, test_word))
+# print(exist(test_board, test_word))
+
+#backtracking problem: #77. Combination
+#Problem statement: 
+'''
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+You may return the answer in any order.
+Example 1:
+
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+Example 2:
+
+Input: n = 1, k = 1
+Output: [[1]]
  
+
+Constraints:
+
+1 <= n <= 20
+1 <= k <= n
+'''
+def combine(n, k):
+    #base case: 
+    if not n or not k: 
+        return None
+    
+    res = []
+
+    dfs([], 0, res, n, k)
+    return res
+
+#DFS method to construct the combination array from the list
+def dfs(searchArray, index, result, n, k):
+    #base case: 
+    if len(searchArray) == k:
+        result.append(searchArray)
+        return 
+
+    for i in range(index + 1, n +1):
+        dfs(searchArray + [i], i, result, n, k)
+
+    
+#helper method to find the 
+
+
+
+#driver code: 
+num = 4
+k = 2
+
+print(combine(num, k))
+
