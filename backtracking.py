@@ -192,51 +192,55 @@ Given word = "ABCB", return false.
 
 #we will approach this problem with a dfs approach
 def exist(board, word):
-    #base case: 
-    if not board: 
-        return False
+    # #base case: 
+    # if not board: 
+    #     return False
 
-    if not word: 
-        return False
+    # if not word: 
+    #     return False
     #getting the dimension of the board
     m = len(board)
     n = len(board[0])
 
+    if len(word) == 0 or m == 0 or n == 0:
+        return False
     #create a visited arrat to keep track of the visited neighbors of a node
-    visited = [[False for i in range(0, m)] for j in range(0, n)]
+    visited = [[False for _ in range(n)] for _ in range(m)]
 
-    for i in range(m):
-        for j in range(n):
-            if dfs(i, j, word, visited, board):
+    #create a helper method to handle dfs alogrithm:
+    def dfs(i, row , column):
+        #base case: 
+        if i == len(word):
+            return True
+
+        #confirm that the current node has been visited: 
+        visited[row][column] = True
+
+        #valid move that node can take to make the word
+        moves = [(1,0),(0,1),(-1,0),(0,-1)]
+        #begin the moves
+        for move in moves:
+            new_row = row + move[0]
+            new_col = column + move[1]
+            #skip the element that are out of bound: 
+            validBound = 0 <= new_row < m and 0 <= new_col < n
+            #if the moves are out of bound, and the neighbor is not in the word list and the current node has been visited
+            if not validBound or not board[new_row][new_col] == word[i] or visited[new_row][new_col]:
+                #Then skip it
+                continue
+            #recurse until all element are found
+            if dfs(i+1, new_row, new_col):
+                return True
+
+        visited[row][column] = False
+        return False
+
+    #Loop through the array until the first word in the word list is found, then we will run the dfs to check the list generation
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == word[0] and dfs(1, i, j):
                 return True
     return False
-        
-
-#create a helper method to handle dfs alogrithm:
-def dfs(i,j, word, visited, board):
-    #getting the dimension of the board
-    m = len(board)
-    n = len(board[0])
-
-    #Any element being checked in this function will
-    #automatically get put into the visited array right on the spot
-    visited[i][j] == True
-    #Base case: 
-    if not word: 
-        return False
-    
-    if not (0 <= i < m and 0<=j<n):
-        return False
-    #if the current element in the board is not anywhere
-    #in the word list, then return false
-    if board[i][j] != word[0]:
-        return False
-    #checking the neighboring node to see if they are already in
-    #visited array or not
-    if not visited[i][j+1] or not visited[i][j-1] or not visited[i+1][j] or not visited[i-1][j]:
-        result = dfs(i, j+1, word[1:], visited, board) or dfs(i, j-1, word[1:], visited, board) or dfs(i+1, j, word[1:], visited, board) or dfs(i-1, j, word[1:], visited, board)
-
-    return result
 
 
 #driver code: 
@@ -247,8 +251,12 @@ test_board =[
 ]
 
 test_word = "ABCCED"
+test_word_2 = "SEE"
+test_word_3 = "ABCB"
 
-# print(exist(test_board, test_word))
+print(exist(test_board, test_word))
+print(exist(test_board, test_word_2))
+print(exist(test_board, test_word_3))
 
 #backtracking problem: #77. Combination
 #Problem statement: 
@@ -308,5 +316,5 @@ def dfs(searchArray, index, result, n, k):
 num = 4
 k = 2
 
-print(combine(num, k))
+# print(combine(num, k))
 
