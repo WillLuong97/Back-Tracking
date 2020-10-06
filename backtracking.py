@@ -318,3 +318,81 @@ k = 2
 
 # print(combine(num, k))
 
+#Leetcode problem 40. Combination Sum II
+
+#Problem statement: 
+
+'''
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note:
+
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+Example 2:
+
+Input: candidates = [2,5,2,1,2], target = 5,
+A solution set is:
+[
+  [1,2,2],
+  [5]
+]
+
+'''
+#Approach DFS + BACKTRACKING
+def combinationSum2(candidates, target): 
+    #Base case: 
+    if not candidates:
+        return None
+
+    if not target: 
+        return [candidates]
+
+    visited = set()
+
+    #depth first search algorithm to find the sum
+    def dfs(array, path):
+        #base case: the current sum in the path or queue is greater than the target
+        if sum(path) > target:
+            return
+        #if the current sum adds up to the target so we will store them as a list within the result queue
+        if sum(path) == target and tuple(path) not in visited:
+            result.append(tuple(path))
+            visited.add(tuple(path))
+        #Loop through the search space to find the sum of each element in the array recursively
+        for i in range(len(array)):
+            dfs(array[i+1:], path + [array[i]])
+        
+
+    #sort the candiate for optimal approach
+    sortedArr = sorted(candidates)
+
+    result=[]
+    dfs(sortedArr, [])
+    return result
+
+
+def main():
+    print("TESTING COMBINATION SUM 2...")
+    test_candidate = [10,1,2,7,6,1,5]
+    target01 = 8
+
+    test_candidate_1 = [2,5,2,1,2]
+    target = 5
+    print(combinationSum2(test_candidate, target01))
+    print(combinationSum2(test_candidate_1, target))
+
+    print("END OF TESTING...")
+main()
