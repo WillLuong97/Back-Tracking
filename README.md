@@ -50,4 +50,9 @@ For example, the dream() function given above has no base case, so it will keep 
 - Goals: To find the Nth placement of tree in the recursion 
 
 
+### Leetcode Practice Problem: 
+
+| Times                   | Problem #                     | Description  																| Approach        						      |
+| ----------------------- |:-----------------------------:| -------------------------------------------------------------------------------------------------------------------------------------------:| -------------------------------------------------------------------:|
+| 02/09/2021: 4:58pm      |131. Palindrome Partitioning   |Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.  | Backtracking + DFS to gnerate all substring and check for palindrome|
 
