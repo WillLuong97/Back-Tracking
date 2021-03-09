@@ -60,10 +60,8 @@ def checkPowersOfThree(n):
 		#loop through the list of power values to check for the ability of sum
 		for i in range(start, len(possible_power)):
 			curr = possible_power[start]
-			#lst.append(curr)
 			start += 1
 			check_power_of_three_values(num - curr, start)
-			#lst.pop()
 	
 	check_power_of_three_values(n)
 	return answer[0]
