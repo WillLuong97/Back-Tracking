@@ -43,6 +43,37 @@ def grayCode(n):
 		result.append(i^(i >> 1))
 	return result
 
+#We will use DFS to generate each  binary sequence from the search space and then parse them together
+def grayCode_DFS(n):
+	#base case: 
+	if n == 1:
+		return [0,1]
+	if n == 0:
+		return [0]
+	result = []	
+	prevBinaryNumber = '0' * n
+	
+	visited = set()
+	sequence = [prevBinaryNumber]
+	
+	while sequence:
+		binaryNumber = sequence.pop()
+		if binaryNumber not in visited:
+			result.append(int(binaryNumber,2))
+			visited.add(binaryNumber)
+		#stop if we have maxed out all possible n-length binary sequence number
+		if len(visited) == 2**n:
+			break
+		
+		#loop through each binary number generated and move 1 bit
+		for i in range(n):
+			newCh = "0" if binaryNumber[i] == "1" else "1"
+			newBinaryNumber = binaryNumber[:i] + newCh + binaryNumber[i+1:]
+
+			if newBinaryNumber not in visited:
+				sequence.append(newBinaryNumber)	
+	return result
+
 #Main function: 
 def main():
 	print("TESTING GRAY CODE...")
@@ -51,6 +82,10 @@ def main():
 	n = 1
 	print(grayCode(n))
 
+	n = 2
+	print(grayCode_DFS(n))
+	n = 1
+	print(grayCode_DFS(n))
 	print("END OF TESTING....")
 
 
